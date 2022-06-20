@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Projeto_FourTask.Areas.Identity.Data;
 using Projeto_FourTask.Models;
 namespace Projeto_FourTask.Controllers
@@ -12,12 +13,13 @@ namespace Projeto_FourTask.Controllers
             _context = context;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             return View();
         }
 
-        [HttpGet]
+        [Authorize][HttpGet]
         public IActionResult Cadastrar()
         {
             return View();
@@ -31,6 +33,7 @@ namespace Projeto_FourTask.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public IActionResult Listagem()
         {
             var equipes = _context.Equipes.ToList();

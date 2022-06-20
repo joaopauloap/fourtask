@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Projeto_FourTask.Areas.Identity.Data;
 
@@ -11,9 +12,10 @@ using Projeto_FourTask.Areas.Identity.Data;
 namespace Projeto_FourTask.Migrations
 {
     [DbContext(typeof(FourTaskContext))]
-    partial class FourTaskContextModelSnapshot : ModelSnapshot
+    [Migration("20220620035441_correcaoUsuario")]
+    partial class correcaoUsuario
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

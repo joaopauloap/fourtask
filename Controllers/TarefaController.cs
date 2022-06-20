@@ -1,21 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Projeto_FourTask.Controllers
 {
     public class TarefaController : Controller
     {
+        [Authorize]
         public IActionResult Index()
         {
             return View();
         }
 
-        [HttpGet]
+        [Authorize][HttpGet]
         public IActionResult Cadastrar()
         {
             return View();
         }
 
-        [HttpGet]
+        [Authorize][HttpGet]
         public IActionResult Editar() 
         {
             return View();
