@@ -11,8 +11,8 @@ using Projeto_FourTask.Areas.Identity.Data;
 
 namespace Projeto_FourTask.Migrations
 {
-    [DbContext(typeof(FourTask))]
-    [Migration("20220619202142_inicio")]
+    [DbContext(typeof(FourTaskContext))]
+    [Migration("20220619212628_inicio")]
     partial class inicio
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

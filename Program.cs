@@ -4,11 +4,11 @@ using Projeto_FourTask.Areas.Identity.Data;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("FourTaskConnection") ?? throw new InvalidOperationException("Connection string 'FourTaskConnection' not found.");
 
-builder.Services.AddDbContext<FourTask>(options =>
+builder.Services.AddDbContext<FourTaskContext>(options =>
     options.UseSqlServer(connectionString));;
 
 builder.Services.AddDefaultIdentity<Usuario>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<FourTask>();;
+    .AddEntityFrameworkStores<FourTaskContext>();;
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

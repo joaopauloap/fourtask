@@ -2,13 +2,18 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Projeto_FourTask.Areas.Identity.Data;
+using Projeto_FourTask.Models;
 
 namespace Projeto_FourTask.Areas.Identity.Data;
 
-public class FourTask : IdentityDbContext<Usuario>
+public class FourTaskContext : IdentityDbContext<Usuario>
 {
-    public FourTask(DbContextOptions<FourTask> options)
-        : base(options)
+    public DbSet<Usuario> Usuarios { get; set; }
+    public DbSet<Equipe> Equipes { get; set; }
+    public DbSet<Tarefa> Tarefas { get; set; }
+
+
+    public FourTaskContext(DbContextOptions<FourTaskContext> options) : base(options)
     {
     }
 
