@@ -22,6 +22,37 @@
             <td>@equipe.Descricao</td>
             <td>@equipe.AreaAtuacao</td>
             <td>@equipe.DataCriacao.ToShortDateString()</td>
-        </tr>
+            <td>
+                @*                <form asp-action="Entrar">
+                    <input type="hidden" name="equipeid" id="equipeid" value="@equipe.EquipeId">
+                    <input type="submit" class="btn btn-primary btn-sm" value="Entrar" />
+                    </form>*@
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalSenha" onclick="equipeid.value = @equipe.EquipeId">Entrar</button>
+        </td>
+    </tr>
     }
 </table>
+
+<div class="modal fade" id="modalSenha">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Informe a senha da equipe</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form asp-action="Entrar">
+                    <input type="hidden" name="equipeid" id="equipeid">
+                    <div class="modal-body">
+                        <div class="mb-3 input-group">
+                            <span class="input-group-text"><i class="fas fa-solid fa-key"></i></span>
+                            <input name="senha" type="password" class="form-control" placeholder="Digite a senha" required />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-primary">Confirmar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>

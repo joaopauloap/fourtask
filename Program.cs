@@ -7,7 +7,7 @@ var connectionString = builder.Configuration.GetConnectionString("FourTaskConnec
 builder.Services.AddDbContext<FourTaskContext>(options =>
     options.UseSqlServer(connectionString));;
 
-builder.Services.AddDefaultIdentity<Usuario>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<Usuario>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<FourTaskContext>();;
 
 // Add services to the container.

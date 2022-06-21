@@ -20,3 +20,11 @@ body {
 th {
     font-weight: bold;
 }
+
+.nav-item:hover{
+    font-weight:bold;
+   background-color:#efefefff;
+}
+.navbar-brand:hover {
+    font-weight: bold;
+}

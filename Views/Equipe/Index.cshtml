@@ -1,7 +1,33 @@
-﻿@{
+﻿@using Projeto_FourTask.Areas.Identity.Data
+@model Equipe
+@{
     ViewData["title"] = "Equipe";
 }
 
-<h1>Equipe</h1>
-<a asp-action="Cadastrar">Cadastrar</a>
-<a asp-action="Listagem">Listagem</a>
+@if (Model != null)
+{
+    <h1>Minha equipe</h1>
+
+    <div class="card w-50 mt-4">
+        <div class="card-body text-dark">
+            <div class="text-center">
+            <h3 class="card-title">
+                <span>#@Model.EquipeId</span>
+                @Model.Nome
+                <span class="badge rounded-pill bg-primary"> @Model.AreaAtuacao</span>
+            </h3>
+            <h5 class="card-subtitle mb-2 text-muted"><i>"@Model.Descricao"</i></h5>
+
+            </div>
+            <h5>Usuários</h5>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    @foreach (Usuario usuario in Model.Usuarios)
+                    {
+                        <p>@usuario.Nome</p>
+                    }
+                </li>
+            </ul>
+        </div>
+    </div>
+}

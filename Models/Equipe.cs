@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Projeto_FourTask.Areas.Identity.Data;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Projeto_FourTask.Models
 {
@@ -17,10 +19,16 @@ namespace Projeto_FourTask.Models
         [Display(Name = "Data de criação"), DataType(DataType.Date)]
         public DateTime DataCriacao { get; set; }
 
+
+        //Relacionamentos
+        public ICollection<Usuario> Usuarios { get; set; }  
+
+
         public Equipe()
         {
 
         }
+
 
     }
 }

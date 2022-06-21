@@ -101,6 +101,9 @@ namespace Projeto_FourTask.Areas.Identity.Pages.Account
 
             [Required][Display(Name ="Data de Nascimento")][DataType(DataType.Date)]
             public DateTime DataNascimento { get; set; }
+
+            [Required(ErrorMessage = "O campo nome é obrigatório")]
+            public string Nome { get; set; }
         }
 
 
@@ -117,6 +120,7 @@ namespace Projeto_FourTask.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+                user.Nome = Input.Nome;
                 user.DataNascimento = Input.DataNascimento;
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -135,18 +139,18 @@ namespace Projeto_FourTask.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                    //if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    //{
-                        //return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                    //}
-                   //else
-                    //{
+                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                    {
+                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                    }
+                    else
+                    {
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
-                    //}
+                    }
                 }
                 foreach (var error in result.Errors)
                 {

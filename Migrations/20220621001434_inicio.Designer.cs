@@ -12,7 +12,7 @@ using Projeto_FourTask.Areas.Identity.Data;
 namespace Projeto_FourTask.Migrations
 {
     [DbContext(typeof(FourTaskContext))]
-    [Migration("20220619212628_inicio")]
+    [Migration("20220621001434_inicio")]
     partial class inicio
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -173,6 +173,9 @@ namespace Projeto_FourTask.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("DataNascimento")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -180,11 +183,18 @@ namespace Projeto_FourTask.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("EquipeId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -215,6 +225,8 @@ namespace Projeto_FourTask.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("EquipeId");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -224,6 +236,65 @@ namespace Projeto_FourTask.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Projeto_FourTask.Models.Equipe", b =>
+                {
+                    b.Property<int>("EquipeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EquipeId"), 1L, 1);
+
+                    b.Property<int>("AreaAtuacao")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Senha")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("EquipeId");
+
+                    b.ToTable("Equipes");
+                });
+
+            modelBuilder.Entity("Projeto_FourTask.Models.Tarefa", b =>
+                {
+                    b.Property<int>("TarefaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TarefaId"), 1L, 1);
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataLimite")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Titulo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TarefaId");
+
+                    b.ToTable("Tarefas");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -275,6 +346,20 @@ namespace Projeto_FourTask.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Projeto_FourTask.Areas.Identity.Data.Usuario", b =>
+                {
+                    b.HasOne("Projeto_FourTask.Models.Equipe", "Equipe")
+                        .WithMany("Usuarios")
+                        .HasForeignKey("EquipeId");
+
+                    b.Navigation("Equipe");
+                });
+
+            modelBuilder.Entity("Projeto_FourTask.Models.Equipe", b =>
+                {
+                    b.Navigation("Usuarios");
                 });
 #pragma warning restore 612, 618
         }

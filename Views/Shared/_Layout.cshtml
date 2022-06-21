@@ -7,12 +7,13 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Projeto_FourTask.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">FourTask</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa-solid fa-list-check"></i> FourTask</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -21,7 +22,16 @@
                     <ul class="navbar-nav flex-grow-1">
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Equipe" asp-action="Index">Equipe</a>
+                            <div class="dropdown">
+                                <a href="#" class="nav-link text-dark" data-bs-toggle="dropdown">
+                                    Equipe
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a asp-controller="Equipe" asp-action="Index" class="dropdown-item">Minha equipe</a></li>                                   
+                                    <li><a asp-controller="Equipe" asp-action="Cadastrar" class="dropdown-item">Cadastrar</a></li>
+                                    <li><a asp-controller="Equipe" asp-action="Listagem" class="dropdown-item">Listagem</a></li>
+                                </ul>
+                            </div>
                         </li>
 
                         <li class="nav-item">
@@ -42,7 +52,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container text-center">
-            &copy; 2022 - FourTask 
+            &copy; 2022 - FourTask
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

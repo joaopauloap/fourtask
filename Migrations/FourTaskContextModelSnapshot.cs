@@ -181,11 +181,18 @@ namespace Projeto_FourTask.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("EquipeId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -215,6 +222,8 @@ namespace Projeto_FourTask.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EquipeId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -334,6 +343,20 @@ namespace Projeto_FourTask.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Projeto_FourTask.Areas.Identity.Data.Usuario", b =>
+                {
+                    b.HasOne("Projeto_FourTask.Models.Equipe", "Equipe")
+                        .WithMany("Usuarios")
+                        .HasForeignKey("EquipeId");
+
+                    b.Navigation("Equipe");
+                });
+
+            modelBuilder.Entity("Projeto_FourTask.Models.Equipe", b =>
+                {
+                    b.Navigation("Usuarios");
                 });
 #pragma warning restore 612, 618
         }
