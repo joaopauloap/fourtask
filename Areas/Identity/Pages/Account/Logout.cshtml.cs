@@ -9,9 +9,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using Projeto_FourTask.Areas.Identity.Data;
+using ProjetoFourTask.Areas.Identity.Data;
 
-namespace Projeto_FourTask.Areas.Identity.Pages.Account
+namespace ProjetoFourTask.Areas.Identity.Pages.Account
 {
     public class LogoutModel : PageModel
     {

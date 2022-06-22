@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Projeto_FourTask.Models;
+using ProjetoFourTask.Models;
 using System.Diagnostics;
 
-namespace Projeto_FourTask.Controllers
+namespace ProjetoFourTask.Controllers
 {
     public class HomeController : Controller
     {

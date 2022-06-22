@@ -2,9 +2,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Projeto_FourTask.Areas.Identity.Data;
-using Projeto_FourTask.Models;
-namespace Projeto_FourTask.Controllers
+using ProjetoFourTask.Areas.Identity.Data;
+using ProjetoFourTask.Models;
+
+namespace ProjetoFourTask.Controllers
 {
     public class EquipeController : Controller
     {
@@ -20,7 +21,6 @@ namespace Projeto_FourTask.Controllers
         public IActionResult Index()
         {
             string idUsuarioLogado = _userManager.GetUserId(User);
-            //var usuario = _context.Usuarios.Where(u => u.Id == idUsuarioLogado).Include(u=>u.Equipe).FirstOrDefault();
             var usuario = _context.Usuarios.Find(idUsuarioLogado);
             var equipe = _context.Equipes.Where(e => e.EquipeId == usuario.EquipeId).Include(u => u.Usuarios).FirstOrDefault();
 
@@ -37,10 +37,10 @@ namespace Projeto_FourTask.Controllers
         [HttpPost]
         public IActionResult Cadastrar(Equipe equipe)
         {
-            equipe.DataCriacao = DateTime.Now;
             _context.Equipes.Add(equipe);
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            TempData["msg"] = $"Equipe {equipe.Nome} cadastrada com sucesso!";
+            return RedirectToAction("Listagem");
         }
 
         [Authorize]
@@ -53,7 +53,7 @@ namespace Projeto_FourTask.Controllers
         [HttpPost]
         public IActionResult Entrar(int equipeid, string senha)
         {
-            bool verificarSenha = _context.Equipes.Where(e => (e.EquipeId == equipeid) && (e.Senha == senha)).Any();
+            bool verificarSenha = _context.Equipes.Where(e => e.EquipeId == equipeid && e.Senha == senha).Any();
             if (verificarSenha == true)
             {
                 string idUsuarioLogado = _userManager.GetUserId(User);
@@ -62,13 +62,27 @@ namespace Projeto_FourTask.Controllers
                 usuario.Equipe = _context.Equipes.Find(equipeid);
                 _context.Usuarios.Update(usuario);
                 _context.SaveChanges();
-                return RedirectToAction("Index");
 
+                TempData["msg"] = $"Você entrou na equipe {usuario.Equipe.Nome}!";
+                return RedirectToAction("Index");
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                TempData["msg"] = "Erro ao tentar entrar em equipe. Senha incorreta!";
+                return RedirectToAction("Listagem");
             }
+        }
+
+        public IActionResult Sair()
+        {
+            string idUsuarioLogado = _userManager.GetUserId(User);
+            Usuario usuario = _context.Usuarios.Find(idUsuarioLogado);
+            usuario.EquipeId = null;
+            usuario.Equipe = null;
+            _context.Usuarios.Update(usuario);
+            _context.SaveChanges();
+            TempData["msg"] = "Você saiu da equipe!";
+            return RedirectToAction("Index");
         }
     }
 }

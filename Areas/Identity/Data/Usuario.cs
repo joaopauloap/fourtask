@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using Projeto_FourTask.Models;
+using ProjetoFourTask.Models;
 
-namespace Projeto_FourTask.Areas.Identity.Data;
+namespace ProjetoFourTask.Areas.Identity.Data;
 
 public class Usuario : IdentityUser
 {

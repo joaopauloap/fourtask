@@ -1,4 +1,4 @@
-﻿namespace Projeto_FourTask.Models
+﻿namespace ProjetoFourTask.Models
 {
     public class Tarefa
     {
@@ -10,7 +10,7 @@
 
         public Tarefa()
         {
-
+            DataCriacao = DateTime.Now;
         }
     }
 }

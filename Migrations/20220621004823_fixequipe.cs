@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Projeto_FourTask.Migrations
+namespace ProjetoFourTask.Migrations
 {
     public partial class fixequipe : Migration
     {

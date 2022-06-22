@@ -1,22 +1,24 @@
-﻿@using Projeto_FourTask.Areas.Identity.Data
+﻿@using ProjetoFourTask.Areas.Identity.Data
 @model Equipe
 @{
     ViewData["title"] = "Equipe";
 }
 
+<mensagem texto="@TempData["msg"]"></mensagem>
+
 @if (Model != null)
 {
     <h1>Minha equipe</h1>
 
-    <div class="card w-50 mt-4">
+    <div class="card w-50 mt-4 shadow ">
         <div class="card-body text-dark">
             <div class="text-center">
-            <h3 class="card-title">
-                <span>#@Model.EquipeId</span>
-                @Model.Nome
-                <span class="badge rounded-pill bg-primary"> @Model.AreaAtuacao</span>
-            </h3>
-            <h5 class="card-subtitle mb-2 text-muted"><i>"@Model.Descricao"</i></h5>
+                <h3 class="card-title">
+                    <span>#@Model.EquipeId</span>
+                    @Model.Nome
+                    <span class="badge rounded-pill bg-primary"> @Model.AreaAtuacao</span>
+                </h3>
+                <h5 class="card-subtitle mb-2 text-muted"><i>"@Model.Descricao"</i></h5>
 
             </div>
             <h5>Usuários</h5>
@@ -29,5 +31,15 @@
                 </li>
             </ul>
         </div>
+        <div class="text-center mt-3">
+            <a asp-action="Sair" asp-controller="Equipe" class="btn btn-outline-danger w-25">Sair da equipe</a>
+
+        </div>
+    </div>
+}
+else
+{
+    <div class="text-center mt-5">
+        <h5>Você não está em nenhuma equipe. Para ver as equipes disponíveis  <a asp-action="Listagem" asp-controller="Equipe">Clique aqui</a></h5>
     </div>
 }

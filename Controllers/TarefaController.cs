@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Projeto_FourTask.Controllers
+namespace ProjetoFourTask.Controllers
 {
     public class TarefaController : Controller
     {
@@ -11,14 +11,16 @@ namespace Projeto_FourTask.Controllers
             return View();
         }
 
-        [Authorize][HttpGet]
+        [Authorize]
+        [HttpGet]
         public IActionResult Cadastrar()
         {
             return View();
         }
 
-        [Authorize][HttpGet]
-        public IActionResult Editar() 
+        [Authorize]
+        [HttpGet]
+        public IActionResult Editar()
         {
             return View();
         }

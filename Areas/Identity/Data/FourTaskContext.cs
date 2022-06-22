@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Projeto_FourTask.Areas.Identity.Data;
-using Projeto_FourTask.Models;
+using ProjetoFourTask.Models;
 
-namespace Projeto_FourTask.Areas.Identity.Data;
+namespace ProjetoFourTask.Areas.Identity.Data;
 
 public class FourTaskContext : IdentityDbContext<Usuario>
 {

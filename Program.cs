@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Projeto_FourTask.Areas.Identity.Data;
+using ProjetoFourTask.Areas.Identity.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("FourTaskConnection") ?? throw new InvalidOperationException("Connection string 'FourTaskConnection' not found.");
 

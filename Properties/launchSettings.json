@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "Projeto_FourTask": {
+    "ProjetoFourTask": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

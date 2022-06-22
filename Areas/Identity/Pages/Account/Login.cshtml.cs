@@ -14,9 +14,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using Projeto_FourTask.Areas.Identity.Data;
+using ProjetoFourTask.Areas.Identity.Data;
 
-namespace Projeto_FourTask.Areas.Identity.Pages.Account
+namespace ProjetoFourTask.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {
@@ -74,7 +74,7 @@ namespace Projeto_FourTask.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required(ErrorMessage = "Insira uma senha.")]
-            [DataType(DataType.Password), Display(Name ="Senha")]
+            [DataType(DataType.Password), Display(Name = "Senha")]
             public string Password { get; set; }
 
             /// <summary>
@@ -120,7 +120,7 @@ namespace Projeto_FourTask.Areas.Identity.Pages.Account
                 }
                 if (result.RequiresTwoFactor)
                 {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, Input.RememberMe });
                 }
                 if (result.IsLockedOut)
                 {

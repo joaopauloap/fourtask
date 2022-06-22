@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Projeto_FourTask.Migrations
+namespace ProjetoFourTask.Migrations
 {
     public partial class inicio : Migration
     {

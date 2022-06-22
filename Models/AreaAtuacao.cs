@@ -1,4 +1,4 @@
-﻿namespace Projeto_FourTask.Models
+﻿namespace ProjetoFourTask.Models
 {
     public enum AreaAtuacao
     {

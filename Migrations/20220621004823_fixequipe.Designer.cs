@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Projeto_FourTask.Areas.Identity.Data;
+using ProjetoFourTask.Areas.Identity.Data;
 
 #nullable disable
 
-namespace Projeto_FourTask.Migrations
+namespace ProjetoFourTask.Migrations
 {
     [DbContext(typeof(FourTaskContext))]
     [Migration("20220621004823_fixequipe")]
@@ -161,7 +161,7 @@ namespace Projeto_FourTask.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Projeto_FourTask.Areas.Identity.Data.Usuario", b =>
+            modelBuilder.Entity("ProjetoFourTask.Areas.Identity.Data.Usuario", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -238,7 +238,7 @@ namespace Projeto_FourTask.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Projeto_FourTask.Models.Equipe", b =>
+            modelBuilder.Entity("ProjetoFourTask.Models.Equipe", b =>
                 {
                     b.Property<int>("EquipeId")
                         .ValueGeneratedOnAdd()
@@ -269,7 +269,7 @@ namespace Projeto_FourTask.Migrations
                     b.ToTable("Equipes");
                 });
 
-            modelBuilder.Entity("Projeto_FourTask.Models.Tarefa", b =>
+            modelBuilder.Entity("ProjetoFourTask.Models.Tarefa", b =>
                 {
                     b.Property<int>("TarefaId")
                         .ValueGeneratedOnAdd()
@@ -307,7 +307,7 @@ namespace Projeto_FourTask.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Projeto_FourTask.Areas.Identity.Data.Usuario", null)
+                    b.HasOne("ProjetoFourTask.Areas.Identity.Data.Usuario", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -316,7 +316,7 @@ namespace Projeto_FourTask.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Projeto_FourTask.Areas.Identity.Data.Usuario", null)
+                    b.HasOne("ProjetoFourTask.Areas.Identity.Data.Usuario", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -331,7 +331,7 @@ namespace Projeto_FourTask.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Projeto_FourTask.Areas.Identity.Data.Usuario", null)
+                    b.HasOne("ProjetoFourTask.Areas.Identity.Data.Usuario", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -340,23 +340,23 @@ namespace Projeto_FourTask.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Projeto_FourTask.Areas.Identity.Data.Usuario", null)
+                    b.HasOne("ProjetoFourTask.Areas.Identity.Data.Usuario", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Projeto_FourTask.Areas.Identity.Data.Usuario", b =>
+            modelBuilder.Entity("ProjetoFourTask.Areas.Identity.Data.Usuario", b =>
                 {
-                    b.HasOne("Projeto_FourTask.Models.Equipe", "Equipe")
+                    b.HasOne("ProjetoFourTask.Models.Equipe", "Equipe")
                         .WithMany("Usuarios")
                         .HasForeignKey("EquipeId");
 
                     b.Navigation("Equipe");
                 });
 
-            modelBuilder.Entity("Projeto_FourTask.Models.Equipe", b =>
+            modelBuilder.Entity("ProjetoFourTask.Models.Equipe", b =>
                 {
                     b.Navigation("Usuarios");
                 });

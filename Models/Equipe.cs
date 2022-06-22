@@ -1,8 +1,8 @@
-﻿using Projeto_FourTask.Areas.Identity.Data;
+﻿using ProjetoFourTask.Areas.Identity.Data;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Projeto_FourTask.Models
+namespace ProjetoFourTask.Models
 {
     public class Equipe
     {
@@ -21,12 +21,12 @@ namespace Projeto_FourTask.Models
 
 
         //Relacionamentos
-        public ICollection<Usuario> Usuarios { get; set; }  
+        public ICollection<Usuario> Usuarios { get; set; }
 
 
         public Equipe()
         {
-
+            DataCriacao = DateTime.Now;
         }
 
 
