@@ -9,31 +9,43 @@
 @if (Model != null)
 {
     <h1>Minha equipe</h1>
-
-    <div class="card w-50 mt-4 shadow ">
-        <div class="card-body text-dark">
-            <div class="text-center">
-                <h3 class="card-title">
-                    <span>#@Model.EquipeId</span>
-                    @Model.Nome
-                    <span class="badge rounded-pill bg-primary"> @Model.AreaAtuacao</span>
-                </h3>
-                <h5 class="card-subtitle mb-2 text-muted"><i>"@Model.Descricao"</i></h5>
-
-            </div>
-            <h5>Usuários</h5>
-            <ul class="list-group">
-                <li class="list-group-item">
+    <div class="row">
+        <div class="card w-50 mt-4 shadow col">
+            <div class="card-body text-dark">
+                <div class="text-center">
+                    <h3 class="card-title">
+                        <span>#@Model.EquipeId</span>
+                        @Model.Nome
+                        <span class="badge rounded-pill bg-primary"> @Model.AreaAtuacao</span>
+                    </h3>
+                    <h5 class="card-subtitle mb-2 text-muted"><i>"@Model.Descricao"</i></h5>
+                </div>
+                <h5>Usuários</h5>
+                <ul class="list-group">
                     @foreach (Usuario usuario in Model.Usuarios)
                     {
-                        <p>@usuario.Nome</p>
+                        <li class="list-group-item">@usuario.Nome</li>
                     }
-                </li>
-            </ul>
+                </ul>
+            </div>
+            <div class="text-center mt-3">
+                <a asp-action="Sair" asp-controller="Equipe" class="btn btn-outline-danger">Sair da equipe</a>
+            </div>
         </div>
-        <div class="text-center mt-3">
-            <a asp-action="Sair" asp-controller="Equipe" class="btn btn-outline-danger w-25">Sair da equipe</a>
 
+
+        <div class="card w-50 mt-4 shadow col">
+            <div class="card-body text-dark">
+                <div class="text-center">
+                    <h3 class="card-title">Tarefas</h3>
+                </div>
+                <ul class="list-group">
+@*                    @foreach (Tarefa tarefa in ViewModel.Tarefas)
+                    {
+                        <li class="list-group-item">@tarefa.Titulo</li>
+                    }*@
+                </ul>
+            </div>
         </div>
     </div>
 }

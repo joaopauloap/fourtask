@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjetoFourTask.Areas.Identity.Data;
 
@@ -11,9 +12,10 @@ using ProjetoFourTask.Areas.Identity.Data;
 namespace ProjetoFourTask.Migrations
 {
     [DbContext(typeof(FourTaskContext))]
-    partial class FourTaskContextModelSnapshot : ModelSnapshot
+    [Migration("20220623010135_relacionamentosTarefaEquipeUsuario")]
+    partial class relacionamentosTarefaEquipeUsuario
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -293,6 +295,7 @@ namespace ProjetoFourTask.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UsuarioId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("TarefaId");
@@ -366,7 +369,7 @@ namespace ProjetoFourTask.Migrations
 
             modelBuilder.Entity("ProjetoFourTask.Models.Tarefa", b =>
                 {
-                    b.HasOne("ProjetoFourTask.Models.Equipe", "Equipe")
+                    b.HasOne("ProjetoFourTask.Models.Equipe", null)
                         .WithMany("Tarefas")
                         .HasForeignKey("EquipeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -374,9 +377,9 @@ namespace ProjetoFourTask.Migrations
 
                     b.HasOne("ProjetoFourTask.Areas.Identity.Data.Usuario", "Usuario")
                         .WithMany("Tarefas")
-                        .HasForeignKey("UsuarioId");
-
-                    b.Navigation("Equipe");
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Usuario");
                 });

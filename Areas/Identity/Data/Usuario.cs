@@ -18,8 +18,9 @@ public class Usuario : IdentityUser
 
 
     //Relacionamentos
-    public Equipe Equipe { get; set; }
+    public Equipe? Equipe { get; set; }
     public int? EquipeId { get; set; }
 
+    public List<Tarefa>? Tarefas { get; set; }
 }
 

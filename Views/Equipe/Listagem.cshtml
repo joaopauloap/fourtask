@@ -25,11 +25,7 @@
             <td>@equipe.AreaAtuacao</td>
             <td>@equipe.DataCriacao.ToShortDateString()</td>
             <td>
-                @*                <form asp-action="Entrar">
-                    <input type="hidden" name="equipeid" id="equipeid" value="@equipe.EquipeId">
-                    <input type="submit" class="btn btn-primary btn-sm" value="Entrar" />
-                    </form>*@
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalSenha" onclick="equipeid.value = @equipe.EquipeId">Entrar</button>
+                <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalSenha" onclick="equipeHidden.value = @equipe.EquipeId">Entrar</a>
             </td>
         </tr>
     }
@@ -43,7 +39,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <form asp-action="Entrar">
-                <input type="hidden" name="equipeid" id="equipeid">
+                <input type="hidden" name="equipeid" id="equipeHidden">
                 <div class="modal-body">
                     <div class="mb-3 input-group">
                         <span class="input-group-text"><i class="fas fa-solid fa-key"></i></span>

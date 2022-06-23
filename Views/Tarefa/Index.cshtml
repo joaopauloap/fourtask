@@ -1,5 +1,33 @@
-﻿@{
+﻿@model List<Tarefa>
+@{
     ViewData["title"] = "Tarefa";
 }
 
-<h1>Tarefa</h1>
+<h1>Listagem de Tarefas</h1>
+
+<table class="table mt-4">
+    <tr>
+        <th>Equipe</th>
+        <th>Título</th>
+        <th>Descrição</th>
+        <th>Data de Criação</th>
+        <th class="text-black">Data limite</th>
+    </tr>
+
+    @foreach (Tarefa tarefa in Model)
+    {
+        <tr>
+            <td>@tarefa.Equipe.Nome</td>
+            <td>@tarefa.Titulo</td>
+            <td>@tarefa.Descricao</td>
+            <td>@tarefa.DataCriacao.ToShortDateString()</td>
+            <td>@tarefa.DataLimite.ToShortDateString()</td>
+            <td>
+                <form asp-action="Editar" method="get">
+                    <input type="hidden" name="tarefaId" id="tarefaHidden">
+                    <button type="submit" class="btn btn-primary" onclick="tarefaHidden.value = @tarefa.TarefaId">Editar</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>

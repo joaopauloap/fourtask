@@ -23,21 +23,25 @@
 
                         <li class="nav-item">
                             <div class="dropdown">
-                                <a href="#" class="nav-link text-dark" data-bs-toggle="dropdown">
-                                    Equipe
-                                </a>
+                                <a href="#" class="nav-link text-dark" data-bs-toggle="dropdown">Equipe</a>
                                 <ul class="dropdown-menu">
-                                    <li><a asp-controller="Equipe" asp-action="Index" class="dropdown-item">Minha equipe</a></li>                                   
-                                    <li><a asp-controller="Equipe" asp-action="Cadastrar" class="dropdown-item">Cadastrar</a></li>
+                                    <li><a asp-controller="Equipe" asp-action="Index" class="dropdown-item">Minha equipe</a></li>
                                     <li><a asp-controller="Equipe" asp-action="Listagem" class="dropdown-item">Listagem</a></li>
+                                    <li><a asp-controller="Equipe" asp-action="Cadastrar" class="dropdown-item">Cadastrar</a></li>
                                 </ul>
                             </div>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Tarefa" asp-action="Index">Tarefa</a>
+                            <div class="dropdown">
+                                <a href="#" class="nav-link text-dark" data-bs-toggle="dropdown">Tarefa</a>
+                                <ul class="dropdown-menu">
+                                    <li><a asp-controller="Tarefa" asp-action="Cadastrar" class="dropdown-item">Cadastrar</a></li>
+                                    <li><a asp-controller="Tarefa" asp-action="Index" class="dropdown-item">Listagem</a></li>
+                                    <li><a asp-controller="Tarefa" asp-action="Editar" class="dropdown-item">Editar</a></li>
+                                </ul>
+                            </div>
                         </li>
-
                     </ul>
                 </div>
                 <partial name="_LoginPartial" />
