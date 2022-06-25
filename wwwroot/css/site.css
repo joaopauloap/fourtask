@@ -28,3 +28,26 @@ th {
 .navbar-brand:hover {
     font-weight: bold;
 }
+
+.list-group-item{
+    background-color:whitesmoke;
+}
+.list-group-item:hover {
+    cursor: pointer;
+    background-color:lightgray;
+}
+
+.carousel .carousel-item {
+    height: 300px;
+}
+
+.carousel-item img {
+    position: absolute;
+    object-fit: cover;
+    top: 0;
+    left: 0;
+}
+
+.carousel-caption{
+   
+}

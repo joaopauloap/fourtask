@@ -3,20 +3,25 @@
     ViewData["title"] = "Tarefa";
 }
 
+<erro texto="@TempData["erro"]"></erro>
+<mensagem texto="@TempData["msg"]"></mensagem>
+
 <h1>Listagem de Tarefas</h1>
 
 <table class="table mt-4">
     <tr>
+        <th>Id</th>
         <th>Equipe</th>
         <th>Título</th>
         <th>Descrição</th>
         <th>Data de Criação</th>
-        <th class="text-black">Data limite</th>
+        <th class="text-black"><mark>Data limite</mark></th>
     </tr>
 
     @foreach (Tarefa tarefa in Model)
     {
         <tr>
+            <td>@tarefa.TarefaId</td>
             <td>@tarefa.Equipe.Nome</td>
             <td>@tarefa.Titulo</td>
             <td>@tarefa.Descricao</td>

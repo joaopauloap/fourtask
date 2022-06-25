@@ -75,7 +75,7 @@ namespace ProjetoFourTask.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
+            [Required(ErrorMessage = "O e-mail é obrigatório!")]
             [EmailAddress]
             [Display(Name = "E-mail")]
             public string Email { get; set; }
@@ -84,7 +84,7 @@ namespace ProjetoFourTask.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
+            [Required(ErrorMessage = "A senha é obrigatória!")]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Senha")]
@@ -94,17 +94,18 @@ namespace ProjetoFourTask.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
+            [Required(ErrorMessage = "A confirmação de senha é obrigatória!")]
             [DataType(DataType.Password)]
             [Display(Name = "Confirmar Senha")]
             [Compare("Password", ErrorMessage = "As senhas não são iguais.")]
             public string ConfirmPassword { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "A data de nascimento é obrigatória!")]
             [Display(Name = "Data de Nascimento")]
             [DataType(DataType.Date)]
             public DateTime DataNascimento { get; set; }
 
-            [Required(ErrorMessage = "O campo nome é obrigatório")]
+            [Required(ErrorMessage = "O nome é obrigatório")]
             public string Nome { get; set; }
         }
 
@@ -117,7 +118,7 @@ namespace ProjetoFourTask.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/");
+            returnUrl ??= Url.Content("~/Equipe/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {

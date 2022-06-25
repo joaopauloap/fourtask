@@ -4,54 +4,113 @@
     ViewData["title"] = "Equipe";
 }
 
+<erro texto="@TempData["erro"]"></erro>
 <mensagem texto="@TempData["msg"]"></mensagem>
 
 @if (Model != null)
 {
     <h1>Minha equipe</h1>
-    <div class="row">
-        <div class="card w-50 mt-4 shadow col">
-            <div class="card-body text-dark">
-                <div class="text-center">
-                    <h3 class="card-title">
-                        <span>#@Model.EquipeId</span>
-                        @Model.Nome
-                        <span class="badge rounded-pill bg-primary"> @Model.AreaAtuacao</span>
-                    </h3>
-                    <h5 class="card-subtitle mb-2 text-muted"><i>"@Model.Descricao"</i></h5>
+    <div class="container overflow-hidden">
+        <div class="row gx-5 mt-4">
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-body text-dark">
+                        <div class="text-center">
+                            <h3 class="card-title">
+                                <span>#@Model.EquipeId</span>
+                                @Model.Nome
+                                <span class="badge rounded-pill bg-danger"> @Model.AreaAtuacao</span>
+                            </h3>
+                            <h5 class="card-subtitle mb-2 text-muted"><i>"@Model.Descricao"</i></h5>
+                        </div>
+                        <h5>Usuários</h5>
+                        <ul class="list-group">
+                            @foreach (Usuario usuario in Model.Usuarios)
+                            {
+                                <li class="list-group-item">@usuario.Nome</li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a data-bs-toggle="modal" data-bs-target="#modalSair" class="btn btn-outline-danger">Sair da equipe</a>
+                    </div>
                 </div>
-                <h5>Usuários</h5>
-                <ul class="list-group">
-                    @foreach (Usuario usuario in Model.Usuarios)
-                    {
-                        <li class="list-group-item">@usuario.Nome</li>
-                    }
-                </ul>
             </div>
-            <div class="text-center mt-3">
-                <a asp-action="Sair" asp-controller="Equipe" class="btn btn-outline-danger">Sair da equipe</a>
+            <div class="modal fade" id="modalSair">
+                <form asp-action="Sair">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Sair da equipe @Model.Nome</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Deseja realmente sair da equipe @Model.Nome?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                                <confirmar></confirmar>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
-        </div>
 
-
-        <div class="card w-50 mt-4 shadow col">
-            <div class="card-body text-dark">
-                <div class="text-center">
-                    <h3 class="card-title">Tarefas</h3>
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-body text-dark">
+                        <div class="text-center">
+                            <h3 class="card-title">Tarefas</h3>
+                        </div>
+                        <ul class="list-group">
+                            @foreach (Tarefa tarefa in Model.Tarefas)
+                            {
+                                <li class="list-group-item">
+                                    <a data-bs-toggle="modal" data-bs-target="#modalTarefa" onclick="abrirModalTarefa('@tarefa.TarefaId','@tarefa.Titulo','@tarefa.Descricao')">@tarefa.Titulo</a>
+                                    <span class="badge rounded-pill bg-info ms-2">@tarefa.Usuario?.Nome</span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
                 </div>
-                <ul class="list-group">
-@*                    @foreach (Tarefa tarefa in ViewModel.Tarefas)
-                    {
-                        <li class="list-group-item">@tarefa.Titulo</li>
-                    }*@
-                </ul>
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modalTarefa">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTarefaTitulo"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="modalTarefaDescricao">Descrição: </p>
+                    <form asp-action="Aceitar" asp-controller="Tarefa">
+                        <input type="hidden" id="inputHiddenTarefaId" name="tarefaId">
+                        <button class="btn btn-sm btn-success">Aceitar tarefa</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 }
 else
 {
     <div class="text-center mt-5">
         <h5>Você não está em nenhuma equipe. Para ver as equipes disponíveis  <a asp-action="Listagem" asp-controller="Equipe">Clique aqui</a></h5>
     </div>
+}
+
+@section Scripts{
+    <script>
+        function abrirModalTarefa(id, titulo, descricao) {
+            inputHiddenTarefaId.value = id
+            document.getElementById("modalTarefaTitulo").innerText = "Tarefa: " + titulo
+            document.getElementById("modalTarefaDescricao").innerText += descricao
+        }
+    </script>
 }

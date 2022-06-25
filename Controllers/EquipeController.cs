@@ -21,8 +21,8 @@ namespace ProjetoFourTask.Controllers
         public IActionResult Index()
         {
             string idUsuarioLogado = _userManager.GetUserId(User);
-            var usuario = _context.Usuarios.Find(idUsuarioLogado);
-            var equipe = _context.Equipes.Where(e => e.EquipeId == usuario.EquipeId).Include(u => u.Usuarios).FirstOrDefault();
+            Usuario usuario = _context.Usuarios.Find(idUsuarioLogado);
+            Equipe equipe = _context.Equipes.Where(e => e.EquipeId == usuario.EquipeId).Include(u => u.Usuarios).Include(u=>u.Tarefas).FirstOrDefault();
 
             return View(equipe);
         }
@@ -68,11 +68,12 @@ namespace ProjetoFourTask.Controllers
             }
             else
             {
-                TempData["msg"] = "Erro ao tentar entrar em equipe. Senha incorreta!";
+                TempData["erro"] = "Erro ao tentar entrar em equipe. Senha incorreta!";
                 return RedirectToAction("Listagem");
             }
         }
 
+        [HttpPost]
         public IActionResult Sair()
         {
             string idUsuarioLogado = _userManager.GetUserId(User);
@@ -81,7 +82,7 @@ namespace ProjetoFourTask.Controllers
             usuario.Equipe = null;
             _context.Usuarios.Update(usuario);
             _context.SaveChanges();
-            TempData["msg"] = "Você saiu da equipe!";
+            TempData["msg"] = "Você saiu de uma equipe!";
             return RedirectToAction("Index");
         }
     }

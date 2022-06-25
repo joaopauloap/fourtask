@@ -2,7 +2,7 @@
 
 namespace ProjetoFourTask.TagHelpers
 {
-    public class MensagemTagHelper : TagHelper
+    public class ErroTagHelper : TagHelper
     {
         public string Texto { get; set; }
         public string Class { get; set; }
@@ -15,7 +15,7 @@ namespace ProjetoFourTask.TagHelpers
 
                 if (string.IsNullOrEmpty(Class))
                 {
-                    output.Attributes.SetAttribute("class", "alert alert-success alert-dismissible fade show");
+                    output.Attributes.SetAttribute("class", "alert alert-danger alert-dismissible fade show");
                 }
                 else
                 {

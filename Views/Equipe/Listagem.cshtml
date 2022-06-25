@@ -2,7 +2,7 @@
 @{
     ViewData["title"] = "Listagem";
 }
-
+<erro texto="@TempData["erro"]"></erro>
 <mensagem texto="@TempData["msg"]"></mensagem>
 
 <h1>Listagem de Equipes</h1>
@@ -35,7 +35,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Informe a senha da equipe</h5>
+                <h5 class="modal-title">Informe a senha da equipe</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <form asp-action="Entrar">
@@ -48,7 +48,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button type="submit" class="btn btn-primary">Confirmar</button>
+                    <confirmar></confirmar>
                 </div>
             </form>
         </div>

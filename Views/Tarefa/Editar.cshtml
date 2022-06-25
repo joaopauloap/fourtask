@@ -3,35 +3,34 @@
     ViewData["title"] = "Editar Tarefa";
 }
 
-<h1>Editar Tarefa</h1>
+<h1>
+    Editar Tarefa @Model.TarefaId
+    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modalRemover">Remover</button>
+</h1>
 
-<div class="mx-auto w-50">
+<div class="mt-3">
     <form asp-action="Editar">
-        <input type="hidden" value="@Model.TarefaId" />
-        <div class="mb-3">
-            <label asp-for="Titulo" class="form-label"></label>
-            <input asp-for="Titulo" class="form-control" required />
-        </div>
-        <div class="mb-3">
-            <label asp-for="Descricao" class="form-label"></label>
-            <textarea asp-for="Descricao" class="form-control" required></textarea>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Equipe</label>
-            <Select Name="equipeSelecionada" class="form-select" required>
-                <option>@Model.Equipe.Nome</option>
-                @foreach (Equipe equipe in ViewBag.ListaEquipes)
-                {
-                    <option value="@equipe.EquipeId">@equipe.Nome</option>
-                }
-            </Select>
-        </div>
-        <div class="mb-4">
-            <label asp-for="DataLimite" class="form-label"></label>
-            <input asp-for="DataLimite" class="form-control" required/>
-        </div>
-        <div>
-            <input type="submit" class="btn btn-primary" />
-        </div>
+        <partial name="_form" />
     </form>
+</div>
+
+<div class="modal fade" id="modalRemover">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Remover tarefa @Model.TarefaId</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Deseja realmente remover esta tarefa?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                <form asp-action="Remover">
+                    <input type="hidden" Name="tarefaId" value="@Model.TarefaId" />
+                    <confirmar></confirmar>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
