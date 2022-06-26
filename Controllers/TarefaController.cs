@@ -4,24 +4,30 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjetoFourTask.Areas.Identity.Data;
 using ProjetoFourTask.Models;
+using ProjetoFourTask.Repositories;
 using ProjetoFourTask.ViewModels;
 
 namespace ProjetoFourTask.Controllers
 {
     public class TarefaController : Controller
     {
-        private FourTaskContext _context;
         private UserManager<Usuario> _userManager;
-        public TarefaController(FourTaskContext context, UserManager<Usuario> userManager)
+        private ITarefaRepository _tarefaRepository;
+        private IEquipeRepository _equipeRepository;
+        private IUsuarioRepository _usuarioRepository;
+
+        public TarefaController(UserManager<Usuario> userManager, ITarefaRepository tarefaRepository, IEquipeRepository equipeRepository, IUsuarioRepository usuarioRepository)
         {
-            _context = context;
             _userManager = userManager;
+            _tarefaRepository = tarefaRepository;
+            _equipeRepository = equipeRepository;
+            _usuarioRepository = usuarioRepository;
         }
 
         [Authorize]
         public IActionResult Index()
         {
-            List<Tarefa> tarefas = _context.Tarefas.Include(t => t.Equipe).OrderBy(t => t.DataLimite).ToList();
+            List<Tarefa> tarefas = _tarefaRepository.ListarTodasTarefas();
             return View(tarefas);
         }
 
@@ -31,7 +37,7 @@ namespace ProjetoFourTask.Controllers
         {
             TarefaViewModel viewModel = new TarefaViewModel()
             {
-                ListaEquipes = _context.Equipes.ToList()
+                ListaEquipes = _equipeRepository.ListarEquipes()
             };
             return View(viewModel);
         }
@@ -40,8 +46,9 @@ namespace ProjetoFourTask.Controllers
         public IActionResult Cadastrar(Tarefa tarefa, int equipeSelecionada)
         {
             tarefa.EquipeId = equipeSelecionada;
-            _context.Tarefas.Add(tarefa);
-            _context.SaveChanges();
+            _tarefaRepository.AdicionarTarefa(tarefa);
+            _tarefaRepository.Salvar();
+
             TempData["msg"] = $"Tarefa {tarefa.TarefaId} - \"{tarefa.Titulo}\" cadastrada com sucesso!";
             return RedirectToAction("Index");
         }
@@ -51,8 +58,8 @@ namespace ProjetoFourTask.Controllers
         public IActionResult Editar(int tarefaId)
         {
             string idUsuarioLogado = _userManager.GetUserId(User);
-            Usuario usuario = _context.Usuarios.Find(idUsuarioLogado);
-            Tarefa tarefa = _context.Tarefas.Include(t => t.Equipe).Where(t => t.TarefaId == tarefaId).FirstOrDefault();
+            Usuario usuario = _usuarioRepository.BuscarUsuarioPorId(idUsuarioLogado);
+            Tarefa tarefa = _tarefaRepository.BuscarTarefaPorId(tarefaId);
 
             if (usuario.EquipeId != tarefa.EquipeId)
             {
@@ -63,7 +70,7 @@ namespace ProjetoFourTask.Controllers
             TarefaViewModel viewModel = new TarefaViewModel()
             {
                 Tarefa = tarefa,
-                ListaEquipes = _context.Equipes.ToList()
+                ListaEquipes = _equipeRepository.ListarEquipes()
             };
 
             return View(viewModel);
@@ -73,8 +80,8 @@ namespace ProjetoFourTask.Controllers
         public IActionResult Editar(Tarefa tarefa, int equipeSelecionada)
         {
             tarefa.EquipeId = equipeSelecionada;
-            _context.Tarefas.Update(tarefa);
-            _context.SaveChanges();
+            _tarefaRepository.AtualizarTarefa(tarefa);
+            _tarefaRepository.Salvar();
             TempData["msg"] = $"Tarefa {tarefa.TarefaId} editada com sucesso!";
             return RedirectToAction("Index");
         }
@@ -82,9 +89,10 @@ namespace ProjetoFourTask.Controllers
         [HttpPost]
         public IActionResult Remover(int tarefaId)
         {
-            Tarefa tarefa = _context.Tarefas.Find(tarefaId);
-            _context.Tarefas.Remove(tarefa);
-            _context.SaveChanges();
+            Tarefa tarefa = _tarefaRepository.BuscarTarefaPorId(tarefaId);
+            _tarefaRepository.RemoverTarefa(tarefa);
+            _tarefaRepository.Salvar();
+
             TempData["msg"] = $"Tarefa {tarefa.TarefaId} removida com sucesso!";
             return RedirectToAction("Index");
         }
@@ -93,8 +101,8 @@ namespace ProjetoFourTask.Controllers
         public IActionResult Aceitar(int tarefaId)
         {
             string idUsuarioLogado = _userManager.GetUserId(User);
-            Usuario usuario = _context.Usuarios.Where(u => u.Id == idUsuarioLogado).Include(u => u.Tarefas).FirstOrDefault();
-            Tarefa tarefa = _context.Tarefas.Where(t => t.TarefaId == tarefaId).Include(u => u.Usuario).FirstOrDefault();
+            Usuario usuario = _usuarioRepository.BuscarUsuarioPorId(idUsuarioLogado);
+            Tarefa tarefa = _tarefaRepository.BuscarTarefaPorId(tarefaId);
 
             if (tarefa.UsuarioId != null)
             {
@@ -104,12 +112,13 @@ namespace ProjetoFourTask.Controllers
 
             tarefa.UsuarioId = idUsuarioLogado;
             tarefa.Usuario = usuario;
-            _context.Tarefas.Update(tarefa);
+
+            _tarefaRepository.AtualizarTarefa(tarefa);
 
             usuario.Tarefas.Add(tarefa);
-            _context.Usuarios.Update(usuario);
+            _usuarioRepository.AtualizarUsuario(usuario);
 
-            _context.SaveChanges();
+            _tarefaRepository.Salvar();
 
             TempData["msg"] = $"Tarefa {tarefa.TarefaId} foi aceita por {usuario.Nome} com sucesso!";
             return RedirectToAction("index", "Equipe");

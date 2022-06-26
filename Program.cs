@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ProjetoFourTask.Areas.Identity.Data;
+using ProjetoFourTask.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("FourTaskConnection") ?? throw new InvalidOperationException("Connection string 'FourTaskConnection' not found.");
@@ -13,6 +14,10 @@ builder.Services.AddDefaultIdentity<Usuario>(options => options.SignIn.RequireCo
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IEquipeRepository, EquipeRepository>();
+builder.Services.AddScoped<ITarefaRepository, TarefaRepository>();
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
 var app = builder.Build();
 

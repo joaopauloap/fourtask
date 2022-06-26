@@ -23,7 +23,7 @@
         <div class="mb-4">
             <label asp-for="AreaAtuacao" class="form-label"></label>
             <select asp-for="AreaAtuacao" class="form-select" asp-items="@Html.GetEnumSelectList<AreaAtuacao>()" required>
-                <option>Selecione</option>
+                <option value="">Selecione</option>
             </select>
         </div>
         <div>

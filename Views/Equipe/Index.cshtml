@@ -66,9 +66,10 @@
                             <h3 class="card-title">Tarefas</h3>
                         </div>
                         <ul class="list-group">
-                            @foreach (Tarefa tarefa in Model.Tarefas)
+                            @foreach (Tarefa tarefa in Model.Tarefas.OrderBy(t=>t.DataLimite))
                             {
-                                <li class="list-group-item" data-bs-toggle="modal" data-bs-target="#modalTarefa" onclick="abrirModalTarefa('@tarefa.TarefaId','@tarefa.Titulo','@tarefa.Descricao','@tarefa.UsuarioId')">
+                                <li class="list-group-item" data-bs-toggle="modal" data-bs-target="#modalTarefa" onclick="abrirModalTarefa('@tarefa.TarefaId','@tarefa.Titulo','@tarefa.Descricao','@tarefa.DataCriacao.ToShortDateString()','@tarefa.DataLimite.ToShortDateString()','@tarefa.UsuarioId')">
+                                    <span class="badge bg-secondary">@tarefa.DataLimite.ToShortDateString()</span>
                                     <a>@tarefa.Titulo</a>
                                     <span class="badge rounded-pill bg-success ms-2">@tarefa.Usuario?.Nome</span>
                                 </li>
@@ -88,6 +89,7 @@
                 </div>
                 <div class="modal-body">
                     <p id="modalTarefaDescricao"></p>
+                    <p id="modalTarefaData"></p>
                     <form asp-action="Aceitar" asp-controller="Tarefa">
                         <input type="hidden" id="inputHiddenTarefaId" name="tarefaId">
                         <button class="btn btn-sm btn-success" id="btnAceitarTarefa">Aceitar tarefa</button>
@@ -110,10 +112,11 @@ else
 
 @section Scripts{
     <script>
-        function abrirModalTarefa(id, titulo, descricao, usuarioId) {
+        function abrirModalTarefa(id, titulo, descricao, dataCriacao, dataLimite, usuarioId) {
             inputHiddenTarefaId.value = id
             document.getElementById("modalTarefaTitulo").innerText = "Tarefa: " + titulo
             document.getElementById("modalTarefaDescricao").innerText = "Descrição: " + descricao
+            document.getElementById("modalTarefaData").innerText = "Criada em: " + dataCriacao + " --|-- Data limite: " + dataLimite
             if (usuarioId != "") {
                 document.getElementById("btnAceitarTarefa").className = "d-none"
             } else {
