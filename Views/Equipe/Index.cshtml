@@ -12,6 +12,8 @@
     <h1>Minha equipe</h1>
     <div class="container overflow-hidden">
         <div class="row gx-5 mt-4">
+
+            <!--Card Equipe-->
             <div class="col">
                 <div class="card shadow-sm">
                     <div class="card-body text-dark">
@@ -19,7 +21,7 @@
                             <h3 class="card-title">
                                 <span>#@Model.EquipeId</span>
                                 @Model.Nome
-                                <span class="badge rounded-pill bg-danger"> @Model.AreaAtuacao</span>
+                                <span class="badge rounded-pill bg-info"> @Model.AreaAtuacao</span>
                             </h3>
                             <h5 class="card-subtitle mb-2 text-muted"><i>"@Model.Descricao"</i></h5>
                         </div>
@@ -56,6 +58,7 @@
                 </form>
             </div>
 
+            <!--Card Tarefas-->
             <div class="col">
                 <div class="card shadow-sm">
                     <div class="card-body text-dark">
@@ -65,9 +68,9 @@
                         <ul class="list-group">
                             @foreach (Tarefa tarefa in Model.Tarefas)
                             {
-                                <li class="list-group-item">
-                                    <a data-bs-toggle="modal" data-bs-target="#modalTarefa" onclick="abrirModalTarefa('@tarefa.TarefaId','@tarefa.Titulo','@tarefa.Descricao')">@tarefa.Titulo</a>
-                                    <span class="badge rounded-pill bg-info ms-2">@tarefa.Usuario?.Nome</span>
+                                <li class="list-group-item" data-bs-toggle="modal" data-bs-target="#modalTarefa" onclick="abrirModalTarefa('@tarefa.TarefaId','@tarefa.Titulo','@tarefa.Descricao','@tarefa.UsuarioId')">
+                                    <a>@tarefa.Titulo</a>
+                                    <span class="badge rounded-pill bg-success ms-2">@tarefa.Usuario?.Nome</span>
                                 </li>
                             }
                         </ul>
@@ -84,10 +87,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <p id="modalTarefaDescricao">Descrição: </p>
+                    <p id="modalTarefaDescricao"></p>
                     <form asp-action="Aceitar" asp-controller="Tarefa">
                         <input type="hidden" id="inputHiddenTarefaId" name="tarefaId">
-                        <button class="btn btn-sm btn-success">Aceitar tarefa</button>
+                        <button class="btn btn-sm btn-success" id="btnAceitarTarefa">Aceitar tarefa</button>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -107,10 +110,15 @@ else
 
 @section Scripts{
     <script>
-        function abrirModalTarefa(id, titulo, descricao) {
+        function abrirModalTarefa(id, titulo, descricao, usuarioId) {
             inputHiddenTarefaId.value = id
             document.getElementById("modalTarefaTitulo").innerText = "Tarefa: " + titulo
-            document.getElementById("modalTarefaDescricao").innerText += descricao
+            document.getElementById("modalTarefaDescricao").innerText = "Descrição: " + descricao
+            if (usuarioId != "") {
+                document.getElementById("btnAceitarTarefa").className = "d-none"
+            } else {
+                document.getElementById("btnAceitarTarefa").className = "btn btn-sm btn-success"
+            }
         }
     </script>
 }

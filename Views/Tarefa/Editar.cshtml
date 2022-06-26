@@ -1,10 +1,10 @@
-﻿@model Tarefa
+﻿@model TarefaViewModel
 @{
     ViewData["title"] = "Editar Tarefa";
 }
 
 <h1>
-    Editar Tarefa @Model.TarefaId
+    Editar Tarefa @Model.Tarefa.TarefaId
     <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modalRemover">Remover</button>
 </h1>
 
@@ -18,7 +18,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Remover tarefa @Model.TarefaId</h5>
+                <h5 class="modal-title">Remover tarefa @Model.Tarefa.TarefaId</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
@@ -27,7 +27,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
                 <form asp-action="Remover">
-                    <input type="hidden" Name="tarefaId" value="@Model.TarefaId" />
+                    <input type="hidden" Name="tarefaId" value="@Model.Tarefa.TarefaId" />
                     <confirmar></confirmar>
                 </form>
             </div>

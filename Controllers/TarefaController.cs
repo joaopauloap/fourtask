@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjetoFourTask.Areas.Identity.Data;
 using ProjetoFourTask.Models;
+using ProjetoFourTask.ViewModels;
 
 namespace ProjetoFourTask.Controllers
 {
@@ -20,7 +21,7 @@ namespace ProjetoFourTask.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            List<Tarefa> tarefas = _context.Tarefas.Include(t=>t.Equipe).OrderBy(t=>t.DataLimite).ToList();
+            List<Tarefa> tarefas = _context.Tarefas.Include(t => t.Equipe).OrderBy(t => t.DataLimite).ToList();
             return View(tarefas);
         }
 
@@ -28,8 +29,11 @@ namespace ProjetoFourTask.Controllers
         [HttpGet]
         public IActionResult Cadastrar()
         {
-            ViewBag.ListaEquipes = _context.Equipes.ToList();
-            return View();
+            TarefaViewModel viewModel = new TarefaViewModel()
+            {
+                ListaEquipes = _context.Equipes.ToList()
+            };
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -48,7 +52,7 @@ namespace ProjetoFourTask.Controllers
         {
             string idUsuarioLogado = _userManager.GetUserId(User);
             Usuario usuario = _context.Usuarios.Find(idUsuarioLogado);
-            Tarefa tarefa = _context.Tarefas.Include(t=>t.Equipe).Where(t=>t.TarefaId == tarefaId).FirstOrDefault();
+            Tarefa tarefa = _context.Tarefas.Include(t => t.Equipe).Where(t => t.TarefaId == tarefaId).FirstOrDefault();
 
             if (usuario.EquipeId != tarefa.EquipeId)
             {
@@ -56,8 +60,13 @@ namespace ProjetoFourTask.Controllers
                 return RedirectToAction("index");
             }
 
-            ViewBag.ListaEquipes = _context.Equipes.ToList();
-            return View(tarefa);
+            TarefaViewModel viewModel = new TarefaViewModel()
+            {
+                Tarefa = tarefa,
+                ListaEquipes = _context.Equipes.ToList()
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -84,8 +93,14 @@ namespace ProjetoFourTask.Controllers
         public IActionResult Aceitar(int tarefaId)
         {
             string idUsuarioLogado = _userManager.GetUserId(User);
-            Usuario usuario = _context.Usuarios.Where(u=>u.Id == idUsuarioLogado).Include(u=>u.Tarefas).FirstOrDefault();
-            Tarefa tarefa = _context.Tarefas.Find(tarefaId);
+            Usuario usuario = _context.Usuarios.Where(u => u.Id == idUsuarioLogado).Include(u => u.Tarefas).FirstOrDefault();
+            Tarefa tarefa = _context.Tarefas.Where(t => t.TarefaId == tarefaId).Include(u => u.Usuario).FirstOrDefault();
+
+            if (tarefa.UsuarioId != null)
+            {
+                TempData["erro"] = $"A tarefa \"{tarefa.Titulo}\" já foi aceita pelo usuário {tarefa.Usuario?.Nome}.";
+                return RedirectToAction("index", "Equipe");
+            }
 
             tarefa.UsuarioId = idUsuarioLogado;
             tarefa.Usuario = usuario;
@@ -97,7 +112,7 @@ namespace ProjetoFourTask.Controllers
             _context.SaveChanges();
 
             TempData["msg"] = $"Tarefa {tarefa.TarefaId} foi aceita por {usuario.Nome} com sucesso!";
-            return RedirectToAction("index","Equipe");
+            return RedirectToAction("index", "Equipe");
         }
     }
 }
